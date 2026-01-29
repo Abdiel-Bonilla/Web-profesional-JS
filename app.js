@@ -17,11 +17,11 @@ btnCambiar.addEventListener('click', () => {
     const alt = titulo.dataset.alt === '1';
 
     titulo.textContent = alt
-        ? 'Haz sido troleado por JavaScript'
+        ? 'Haz sido engañado'
         : 'Bienvenido a la aplicación de ejemplo';
 
     subtitulo.textContent = alt
-        ? '¡Sorpresa! Este es un mensaje alternativo.'
+        ? 'Este es un mensaje alternativo.'
         : 'Esta es una aplicación sencilla para demostrar manipulación del DOM.';
 
     titulo.dataset.alt = alt ? '0' : '1';
