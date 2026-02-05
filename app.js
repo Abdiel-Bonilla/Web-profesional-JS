@@ -17,11 +17,11 @@ btnCambiar.addEventListener('click', () => {
     const alt = titulo.dataset.alt === '1';
 
     titulo.textContent = alt
-        ? 'Haz sido engañado'
+        ? 'Haz sido troleado por JavaScript'
         : 'Bienvenido a la aplicación de ejemplo';
 
     subtitulo.textContent = alt
-        ? 'Este es un mensaje alternativo.'
+        ? '¡Sorpresa! Este es un mensaje alternativo.'
         : 'Esta es una aplicación sencilla para demostrar manipulación del DOM.';
 
     titulo.dataset.alt = alt ? '0' : '1';
@@ -44,17 +44,19 @@ listaArticulos.addEventListener('mouseout', (e) => {
     card.classList.remove('is-highlight');
 });
 
-//Agregar elementos al dom de forma dinamica
+// Agregar elementos al DOM de forma dinámica
 const btnAgregarCard = $('#btnAgregarCard');
 const listaArticulosDiv = $('#listaArticulos');
 
-btnAgregarCard.addEventListener('click', () => {
+btnAgregarCard.addEventListener('click', () => { 
     const article = document.createElement('article');
     article.className = 'card';
     article.dataset.tags = 'nuevo';
-    article.innerHTML =  `
-        <h3 class="card-title" >Nueva Card: Agentes de IA</h3>
-        <p class="card-text" > Los agentes de la IA pueden interactuar con su entorno</p>
+    article.innerHTML = `
+        <h3 class="card-title">Nueva card: Agentes de IA</h3>
+        <p class="card-text">Los agentes de IA pueden
+         interactuar con su entorno para lograr
+         objetivos específicos.</p>
         <div class="card-actions">
             <button class="btn small" type="button" data-action="like">👍 Like</button>
             <button class="btn small ghost" type="button" data-action="remove">Eliminar</button>
@@ -63,5 +65,19 @@ btnAgregarCard.addEventListener('click', () => {
     `;
 
     listaArticulosDiv.append(article);
-    setEstado('Nueva card Agregada');
+    setEstado('Nueva card agregada');
 });
+
+//Eliminar card al hacer click en el botón eliminar
+const btnLimpiar = $('#btnLimpiar');
+
+btnLimpiar.addEventListener('click', () =>{
+    const cards = $$('#listaArticulos .card');
+    let removed = 0;
+    cards.forEach(card => {
+        if (card.dataset.seed === 'true')return;
+        card.remove();
+        removed++;
+    });
+    setEstado(`Se eliminaron ${removed}`)
+})
