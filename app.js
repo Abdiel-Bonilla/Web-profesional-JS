@@ -91,15 +91,25 @@ btnLimpiar.addEventListener('click', () =>{
     setEstado(`Se eliminaron ${removed}`);
 });
 
-const likeButtons = document.querySelectorAll(
-    '#listaArticulos button[data-action="like"]');
+// const likeButtons = document.querySelectorAll(
+//     '#listaArticulos button[data-action="like"]');
+const listaArticulos3 = $('#listaArticulos');
 
-likeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const card = btn.closest('.card');
-        hacerLike(card);
-    });
+listaArticulos3.addEventListener('click', (e) => {
+    // Se hizo click en un boton de like?
+    const btn = e.target.closest('button[data-action="like"]');
+    if (!btn) return; // No es un boton de like, salir
+    const card = btn.closest('.card');
+    if (!card) return; // No se encontró la card, salir
+    hacerLike(card);
 });
+
+// likeButtons.forEach(btn => {
+//     btn.addEventListener('click', () => {
+//         const card = btn.closest('.card');
+//         hacerLike(card);
+//     });
+// });
 
 const hacerLike = (card) => {
     const badge = card.querySelector('.badge');
@@ -107,3 +117,4 @@ const hacerLike = (card) => {
     badge.textContent = currentLikes + 1;
     setEstado('Like agregado');
 };
+
