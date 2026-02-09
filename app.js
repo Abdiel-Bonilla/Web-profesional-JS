@@ -88,5 +88,18 @@ btnLimpiar.addEventListener('click', () =>{
         card.remove();
         removed++;
     });
-    setEstado(`Se eliminaron ${removed}`)
-})
+    setEstado(`Se eliminaron ${removed}`);
+});
+
+const likeButtons = document.querySelectorAll(
+    '#listaArticulos button[data-action="like"]');
+
+likeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const card = btn.closest('.card');
+        const badge = card.querySelector('.badge');
+        const currentLikes = Number(badge.textContent) || 0;
+        badge.textContent = currentLikes + 1;
+        setEstado('Like agregado');
+    });
+});
