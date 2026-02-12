@@ -118,3 +118,24 @@ const hacerLike = (card) => {
     setEstado('Like agregado');
 };
 
+const listaArticulos4 = $('#listaArticulos');
+
+listaArticulos4.addEventListener('click', (e) => {
+    // Se hizo click en un boton de eliminar?
+    const btn = e.target.closest('button[data-action="remove"]');
+    if (!btn) return; // No es un boton de eliminar, salir
+    const card = btn.closest('.card');
+    if (!card) return; // No se encontró la card, salir
+    NoLike(card);
+});
+
+const NoLike = (card) => {
+    const badge = card.querySelector('.badge');
+    const currentLikes = Number(badge.textContent) || 0;
+    if (currentLikes > 0)
+        badge.textContent = currentLikes - 1;
+        setEstado('Like eliminado');
+    setEstado('Like eliminado');
+    if (currentLikes <= 0)
+        setEstado('No se puede dar like negativo!');
+}
