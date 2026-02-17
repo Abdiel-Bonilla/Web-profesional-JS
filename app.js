@@ -132,10 +132,37 @@ listaArticulos4.addEventListener('click', (e) => {
 const NoLike = (card) => {
     const badge = card.querySelector('.badge');
     const currentLikes = Number(badge.textContent) || 0;
-    if (currentLikes > 0)
+    if (currentLikes > 0) {
         badge.textContent = currentLikes - 1;
         setEstado('Like eliminado');
-    setEstado('Like eliminado');
-    if (currentLikes <= 0)
+    } else {
         setEstado('No se puede dar like negativo!');
+    }
 }
+
+//filtrar cards
+const filtro = $('#filtro');
+
+//Unir texto y tiulo de cada card y
+//y va a buscar lo que el usuario escribió en el filtro
+const matchText =(card, q) => {
+    const title = card.querySelector('.card-title')?.textContent ?? '';
+    const text = card.querySelector('.card-text')?.textContent ?? '';
+    const haystack = (  title + ' ' + text).toLowerCase();
+    return haystack.includes(q);
+};
+
+//Evento input filtrar mientras se escribe en l a caja de texto
+filtro.addEventListener('input', () => {
+    //q = lo que el usuario escribio en el filtro
+    const q = filtro.value.trim().toLowerCase();
+    const cards = $$('#listaArticulos .card');
+
+    cards.forEach(card => {
+        const ok = q === '' ? true : matchText(card, q);
+        card.hidden = !ok;
+    });
+
+    setEstado(q === '' ? 'Filtro vacio' : `Filtro texto: "${q}"`);
+
+});
