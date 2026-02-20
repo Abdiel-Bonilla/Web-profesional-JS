@@ -166,3 +166,19 @@ filtro.addEventListener('input', () => {
     setEstado(q === '' ? 'Filtro vacio' : `Filtro texto: "${q}"`);
 
 });
+
+//filtrar por tags
+const chips = $('#chips');
+chips.addEventListener('click', (e) => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return; // No es un chip, salir
+
+    const tag = (chip.dataset.tag || '').toLowerCase();
+    const cards = $$('#listaArticulos .card');
+
+    cards.forEach((card) => {
+        const tags = (card.dataset.tags || '').toLowerCase();
+        card.hidden = !tags.includes(tag);
+    } );
+    setEstado(`Filtro tag: "${tag}"`);
+});
