@@ -143,6 +143,8 @@ const NoLike = (card) => {
 //filtrar cards
 const filtro = $('#filtro');
 
+const filterState = {q: '', tags: ''}
+
 //Unir texto y tiulo de cada card y
 //y va a buscar lo que el usuario escribió en el filtro
 const matchText =(card, q) => {
@@ -150,6 +152,27 @@ const matchText =(card, q) => {
     const text = card.querySelector('.card-text')?.textContent ?? '';
     const haystack = (  title + ' ' + text).toLowerCase();
     return haystack.includes(q);
+};
+
+const matchTag = (card, tag) => {
+    if (!tag) return true;
+    const tags = (card.dataset.tags || '').toLowerCase();
+    return tags.includes(tag.toLowerCase());
+};
+
+const applyFilters = () => {
+    const cards = $$ ('#listaArticulos .card');
+    cards.forEach((card) => {
+        const okText = filterState.q ? matchText (card, filterState.q): true;
+        const okTag = matchTag(card, filterState.tags);
+        card.hidden = !(okText && okTag);
+    });
+    const parts = [];
+    if (filterState.q) parts.push(`Texto: "${filterState.q}"`)
+    if (filterState.tags) parts.push (`Tag: "${filterState.tags}"`)
+        setEstado(parts.length
+            ? `Filtros aplicados (${parts.join(', ')})`
+            : `Filtro vacio`);
 };
 
 //Evento input filtrar mientras se escribe en l a caja de texto
@@ -181,4 +204,28 @@ chips.addEventListener('click', (e) => {
         card.hidden = !tags.includes(tag);
     } );
     setEstado(`Filtro tag: "${tag}"`);
+});
+
+//Validar el formulario de suscripcio
+const form = $('#formNewsletter');
+const email = $('#email');
+const interes = $('#interes');
+const feedback = $('#feedback');
+
+//Valida el email con una expresion regular simple
+const isValidEmail = (value) => /^[^\s@]+@+[^\s@]+\.[^\s@]+$/.test(value);
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault(); // Evitar el envio del formulario
+    const valueEmail = email.value.trim();
+    const valueInteres = interes.value.trim();
+
+    email.classList.remove('is-invalid');
+    interes.classList.remove('is-invalid');
+    feedback.textContent = '';
+
+    let ok = true;
+    if (!isValidEmail(valueEmail)) {email.classList.add('is-invalid');
+        ok = false;
+    }
 });

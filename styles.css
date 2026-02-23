@@ -158,3 +158,7 @@ dd{ margin:.25rem 0 0; color:var(--muted); }
   outline: 5px solid var(--accent);
   transform: translateY(-2px);
 }
+
+.input.is-invalid{
+  outline: 2px solid var(--line);
+}
