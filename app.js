@@ -241,3 +241,23 @@ form.addEventListener('submit', (e) => {
     }
 
 });
+
+//Simulacion de carga asincrona de noticias
+const listaNoticias = $('#listaNoticias');
+const renderNoticias = (items) => {
+    listaNoticias.innerHTML = '';
+
+    if (!items || items.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = 'No hay noticias disponibles.';
+        listaNoticias.append(li);
+        return;
+    }
+
+    items.forEach((t) => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        listaNoticias.append(li);
+    });
+
+};
