@@ -228,4 +228,16 @@ form.addEventListener('submit', (e) => {
     if (!isValidEmail(valueEmail)) {email.classList.add('is-invalid');
         ok = false;
     }
+
+    if (!valueInteres){
+        interes.classList.add('is-invalid');
+        ok = false;
+    }
+
+    if (!ok) {
+        feedback.textContent = 'Por favor corrige los errores en el formulario.';
+        setEstado('Error en formulario');
+        return;
+    }
+
 });
