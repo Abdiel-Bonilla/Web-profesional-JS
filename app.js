@@ -261,3 +261,34 @@ const renderNoticias = (items) => {
     });
 
 };
+
+//Simular una carga asincrona con setTimeout
+//Fake fetch: falso fetch que recupera informscion
+const fakeFetchNoticias = () => {
+    return new  Promise((resolve,reject) => {
+        const shouldFail = Math.random() < 0.2; // 20% de probabilidad de fallo
+        setTimeout(() => {
+            if (shouldFail) {
+                reject(new Error('Error al cargar las noticias'));
+                return;
+            }
+        }, 1500);
+    });
+};
+
+const btnCargar = $('#btnCargar');
+btnCargar.addEventListener('click', async() => {
+    btnCargar.disabled = true;
+    setEstado('Cargando noticias...');
+    try {
+        const items = await fakeFetchNoticias();
+        renderNoticias(items);
+        setEstado('Noticias cargadas');
+    } catch (error) {
+        renderNoticias([`Error al cargar noticias: ${error.message}`]);
+        setEstado('Error al cargar noticias');
+    }finally {
+        btnCargar.disabled = false;
+    }
+});
+
